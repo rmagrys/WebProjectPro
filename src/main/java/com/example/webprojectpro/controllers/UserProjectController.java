@@ -1,15 +1,14 @@
 package com.example.webprojectpro.controllers;
 
-import com.example.webprojectpro.services.ProjectService;
+import com.example.webprojectpro.services.UserProjectService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/project")
+@RequestMapping("user-project")
 @AllArgsConstructor
-public class ProjectController {
+public class UserProjectController {
 
-    private final ProjectService projectService;
-
+    private final UserProjectService userProjectService;
 }
