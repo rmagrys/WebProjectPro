@@ -1,0 +1,44 @@
+package com.example.webprojectpro.converters;
+
+import com.example.webprojectpro.models.dtos.UserDto;
+import com.example.webprojectpro.models.entities.User;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class UserDtoConverter {
+
+    public static UserDto toDto(User user){
+
+        return UserDto.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .createDate(user.getCreateDate())
+                .lastLogin(user.getLastLogin())
+                .role(user.getRole())
+                .build();
+    }
+
+    public static User toEntity(UserDto userDto){
+        return User.builder()
+                .id(userDto.getId())
+                .email(userDto.getEmail())
+                .password(userDto.getPassword())
+                .firstName(userDto.getFirstName())
+                .lastName(userDto.getLastName())
+                .createDate(userDto.getCreateDate())
+                .lastLogin(userDto.getLastLogin())
+                .role(userDto.getRole())
+                .build();
+    }
+
+    public static List<UserDto> userListToDto(List<User> userList) {
+        return userList
+                .stream()
+                .map(UserDtoConverter::toDto)
+                .collect(Collectors.toList());
+
+    }
+}
