@@ -21,11 +21,8 @@ public class UserController {
 
     @GetMapping
     public List<UserDto> getAllUsers(){
-        return userService
-                .getAllUsers()
-                .stream()
-                .map(UserDtoConverter::toDto)
-                .collect(Collectors.toList());
+        return UserDtoConverter.userListToDto(userService.getAllUsers());
+
     }
 
     @GetMapping(path = "/{id}")
