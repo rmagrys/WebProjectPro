@@ -23,7 +23,7 @@ public class SemesterDto {
 
     private String name;
 
-    private List<User> users;
+    private List<UserDto> usersDto;
 
-    private List<Project> projects;
+    private List<ProjectDto> projectsDto;
 }

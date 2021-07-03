@@ -1,6 +1,8 @@
-package com.example.webprojectpro.models.entities;
+package com.example.webprojectpro.models.dtos;
 
 import com.example.webprojectpro.enums.Grade;
+import com.example.webprojectpro.models.entities.Project;
+import com.example.webprojectpro.models.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,15 +10,12 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
 @Builder
-public class UserProject {
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class UserProjectDto  {
 
-    @Id
-    @GeneratedValue
     private long id;
 
     @Enumerated(EnumType.STRING)
@@ -24,9 +23,7 @@ public class UserProject {
 
     private boolean enabled;
 
-    @ManyToOne(targetEntity = User.class)
-    private User user;
+    private UserDto userDto;
 
-    @ManyToOne(targetEntity = Project.class)
-    private Project project;
+    private Project projectDto;
 }

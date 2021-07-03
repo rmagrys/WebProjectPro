@@ -27,17 +27,17 @@ public class ProjectDtoConverter {
                 .build();
     }
 
-    static public List<ProjectDto> listToEntity(List<Project> projects) {
+    static public List<Project> listToEntity(List<ProjectDto> projects) {
         return projects
                 .stream()
-                .map(ProjectDtoConverter::toDto)
+                .map(ProjectDtoConverter::toEntity)
                 .collect(Collectors.toList());
     }
 
-    static public List<Project> listToDto(List<ProjectDto> projectDtos) {
+    static public List<ProjectDto> listToDto(List<Project> projectDtos) {
         return projectDtos
                 .stream()
-                .map(ProjectDtoConverter::toEntity)
+                .map(ProjectDtoConverter::toDto)
                 .collect(Collectors.toList());
     }
 }

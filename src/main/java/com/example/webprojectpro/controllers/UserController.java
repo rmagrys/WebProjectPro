@@ -13,29 +13,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path ="/users")
+@RequestMapping(path = "/users")
 @AllArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
     @GetMapping
-    public List<UserDto> getAllUsers(){
-        return UserDtoConverter.userListToDto(userService.getAllUsers());
+    public List<UserDto> getAllUsers() {
+        return UserDtoConverter.listToDto(userService.getAllUsers());
 
     }
 
     @GetMapping(path = "/{id}")
-    public UserDto getUserById(@PathVariable @NonNull final Long id){
+    public UserDto getUserById(@PathVariable @NonNull final Long id) {
         return UserDtoConverter
-                .toDto(userService
-                    .getUserById(id)
-                    .orElseThrow(() -> new NotFoundException("User with id = " + id + " not found")));
+                .toDto(userService.getUserById(id));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto addUser(@RequestBody final UserDto userDto){
+    public UserDto addUser(@RequestBody final UserDto userDto) {
         return UserDtoConverter
                 .toDto(userService.saveNewUser(UserDtoConverter.toEntity(userDto)));
     }

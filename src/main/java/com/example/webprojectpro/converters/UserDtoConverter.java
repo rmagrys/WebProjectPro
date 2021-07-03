@@ -35,11 +35,18 @@ public class UserDtoConverter {
                 .build();
     }
 
-    public static List<UserDto> userListToDto(List<User> userList) {
+    public static List<UserDto> listToDto(List<User> userList) {
         return userList
                 .stream()
                 .map(UserDtoConverter::toDto)
                 .collect(Collectors.toList());
 
+    }
+
+    public static List<User> listToEntity(List<UserDto> userDtos) {
+        return userDtos
+                .stream()
+                .map(UserDtoConverter::toEntity)
+                .collect(Collectors.toList());
     }
 }
