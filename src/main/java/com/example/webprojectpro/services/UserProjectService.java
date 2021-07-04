@@ -1,6 +1,7 @@
 package com.example.webprojectpro.services;
 
 import com.example.webprojectpro.models.entities.UserProject;
+import com.example.webprojectpro.repositories.UserProjectRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +9,6 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserProjectService {
 
-    private final UserProjectService userProjectService;
+    private final UserProjectRepository userProjectRepository;
 
 }

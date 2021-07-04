@@ -1,6 +1,8 @@
 package com.example.webprojectpro.services;
 
 import com.example.webprojectpro.exceptions.NotFoundException;
+import com.example.webprojectpro.exceptions.NotUniqueException;
+import com.example.webprojectpro.models.dtos.UserDto;
 import com.example.webprojectpro.models.entities.User;
 import com.example.webprojectpro.repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -28,12 +30,41 @@ public class UserService {
         return userRepository.save(user);
     }
 
-
-
     public User getUserById(Long id) {
         return userRepository
                 .findById(id)
-                .orElseThrow(() -> new NotFoundException(""));
+                .orElseThrow(
+                        () -> new NotFoundException("User with id = [" + id + "]does not exist")
+                );
+    }
 
+    public void updateUser(UserDto userDto) {
+        User user = getUserById(userDto.getId());
+        if(!isEmailUnique(userDto.getEmail())){
+            updateUserValues(user, userDto);
+            userRepository.save(user);
+        } else {
+            throw new NotUniqueException("Email already exists");
+        }
+    }
+
+    private User updateUserValues(User user, UserDto userDto) {
+        if(userDto.getEmail() != null){
+            user.setEmail(userDto.getEmail());
+        }
+        if(userDto.getFirstName() != null){
+            user.setFirstName(userDto.getFirstName());
+        }
+        if(userDto.getLastName() != null){
+            user.setLastName(userDto.getLastName());
+        }
+        if(userDto.getRole() != null){
+            user.setRole(userDto.getRole());
+        }
+        return user;
+    }
+
+    private boolean isEmailUnique(String email) {
+        return userRepository.countUserByEmail(email) == 0;
     }
 }
