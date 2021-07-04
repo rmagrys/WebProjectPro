@@ -37,15 +37,15 @@ public class UserService {
         return userRepository
                 .findById(id)
                 .orElseThrow(
-                        () -> new NotFoundException("User with id = [" + id + "]does not exist")
+                        () -> new NotFoundException("User with id = [" + id + "] does not exist")
                 );
     }
 
-    public void updateUser(UserDto userDto) {
-        User user = getUserById(userDto.getId());
+    public User updateUserById(UserDto userDto, Long id) {
+        User user = getUserById(id);
         if(!isEmailUnique(userDto.getEmail())){
             updateUserValues(user, userDto);
-            userRepository.save(user);
+            return userRepository.save(user);
         } else {
             throw new NotUniqueException("Email already exists");
         }
@@ -68,5 +68,15 @@ public class UserService {
 
     private boolean isEmailUnique(String email) {
         return userRepository.countUserByEmail(email) == 0;
+    }
+
+    public void updateLastLogin(User user) {
+        user.setLastLogin(Timestamp.valueOf(LocalDateTime.now()));
+        userRepository.save(user);
+    }
+
+    public void deleteUserById(Long id) {
+        User user = getUserById(id);
+        userRepository.delete(user);
     }
 }

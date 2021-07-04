@@ -34,7 +34,8 @@ public class Project {
     @OneToMany(
             mappedBy = "project",
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
     )
     private List<UserProject> projects;
 

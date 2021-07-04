@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 @Builder
 @Data
@@ -27,4 +25,5 @@ public class ProjectDto {
 
     @Enumerated(EnumType.STRING)
     private Grade possibleGrade;
+
 }

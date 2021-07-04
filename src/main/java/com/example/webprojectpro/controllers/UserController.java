@@ -18,10 +18,9 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping
+    @GetMapping(path = "/all")
     public List<UserDto> getAllUsers() {
         return UserDtoConverter.listToDto(userService.getAllUsers());
-
     }
 
     @GetMapping(path = "/{id}")
@@ -33,13 +32,18 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Long addUser(@RequestBody final UserDto userDto) {
-        User user = userService.saveNewUser(UserDtoConverter.toEntity(userDto));
-        return user.getId();
+        return userService.saveNewUser(UserDtoConverter.toEntity(userDto)).getId();
     }
 
     @PatchMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateUser(@RequestBody final UserDto userDto){
-        userService.updateUser(userDto);
+    public Long updateUserById(@RequestBody final UserDto userDto, @PathVariable Long id){
+       return userService.updateUserById(userDto, id).getId();
+    }
+
+    @DeleteMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteUserById(@PathVariable Long id){
+        userService.deleteUserById(id);
     }
 }

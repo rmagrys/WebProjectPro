@@ -25,5 +25,5 @@ public class UserProjectDto  {
 
     private UserDto userDto;
 
-    private Project projectDto;
+    private ProjectDto projectDto;
 }
