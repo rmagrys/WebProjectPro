@@ -2,6 +2,7 @@ package com.example.webprojectpro.controllers;
 
 import com.example.webprojectpro.converters.UserDtoConverter;
 import com.example.webprojectpro.models.dtos.UserDto;
+import com.example.webprojectpro.models.entities.User;
 import com.example.webprojectpro.services.UserService;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -31,8 +32,9 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void addUser(@RequestBody final UserDto userDto) {
-        userService.saveNewUser(UserDtoConverter.toEntity(userDto));
+    public Long addUser(@RequestBody final UserDto userDto) {
+        User user = userService.saveNewUser(UserDtoConverter.toEntity(userDto));
+        return user.getId();
     }
 
     @PatchMapping(path = "/{id}")

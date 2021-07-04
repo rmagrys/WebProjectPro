@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -25,9 +24,13 @@ public class UserService {
     }
 
     public User saveNewUser(User user) {
-        user.setCreateDate(LocalDate.now());
-        user.setLastLogin(Timestamp.valueOf(LocalDateTime.now()));
-        return userRepository.save(user);
+        if(!isEmailUnique(user.getEmail())) {
+            user.setCreateDate(LocalDate.now());
+            user.setLastLogin(Timestamp.valueOf(LocalDateTime.now()));
+            return userRepository.save(user);
+        } else {
+            throw new NotUniqueException("Email already exists");
+        }
     }
 
     public User getUserById(Long id) {
@@ -48,7 +51,7 @@ public class UserService {
         }
     }
 
-    private User updateUserValues(User user, UserDto userDto) {
+    private void updateUserValues(User user, UserDto userDto) {
         if(userDto.getEmail() != null){
             user.setEmail(userDto.getEmail());
         }
@@ -61,7 +64,6 @@ public class UserService {
         if(userDto.getRole() != null){
             user.setRole(userDto.getRole());
         }
-        return user;
     }
 
     private boolean isEmailUnique(String email) {

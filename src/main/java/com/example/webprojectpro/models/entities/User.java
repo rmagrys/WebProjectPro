@@ -25,6 +25,10 @@ public class User {
 
     private String email;
 
+    private String semester;
+
+    private String learningGroup;
+
     private char[] password;
 
     private String firstName;
@@ -39,10 +43,6 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    @ManyToMany
-    @JoinTable
-    private List<LearningGroup> learningGroups;
 
     @OneToMany(
             mappedBy = "user",

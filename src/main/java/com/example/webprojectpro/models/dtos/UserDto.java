@@ -1,8 +1,6 @@
 package com.example.webprojectpro.models.dtos;
 
 import com.example.webprojectpro.enums.Role;
-import com.example.webprojectpro.models.entities.LearningGroup;
-import com.example.webprojectpro.models.entities.UserProject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +23,10 @@ public class UserDto {
 
     private char[] password;
 
+    private String semester;
+
+    private String learningGroup;
+
     private String firstName;
 
     private String lastName;
@@ -36,7 +38,6 @@ public class UserDto {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    private List<LearningGroupDto> learningGroupsDto;
 
     private List<UserProjectDto> projectsDto;
 }
