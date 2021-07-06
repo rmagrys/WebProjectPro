@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/project")
 @AllArgsConstructor
@@ -29,13 +30,17 @@ public class ProjectController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Long addProject(@RequestBody final ProjectDto projectDto){
-       return projectService.addNewProject(ProjectDtoConverter.toEntity(projectDto)).getId();
+       return projectService.addNewProject(
+               ProjectDtoConverter.toEntity(projectDto)
+       ).getId();
     }
 
     @PatchMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Long updateProject(@RequestBody final ProjectDto projectDto, @PathVariable Long id){
-        return ProjectDtoConverter.toDto(projectService.updateProject(projectDto, id)).getId();
+    public Long updateProject(@RequestBody  final ProjectDto projectDto, @PathVariable Long id){
+        return ProjectDtoConverter.toDto(
+                projectService.updateProject(projectDto, id)
+        ).getId();
     }
 
     @DeleteMapping(path = "/{id}")

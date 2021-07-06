@@ -2,8 +2,11 @@ package com.example.webprojectpro.converters;
 
 import com.example.webprojectpro.models.dtos.ProjectDto;
 import com.example.webprojectpro.models.entities.Project;
+import org.springframework.context.ApplicationContext;
 
+import javax.swing.*;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class ProjectDtoConverter {
@@ -14,8 +17,6 @@ public class ProjectDtoConverter {
                 .name(project.getName())
                 .enabled(project.isEnabled())
                 .build();
-
-
     }
 
     static public Project toEntity(ProjectDto projectDto){
@@ -26,6 +27,7 @@ public class ProjectDtoConverter {
                 .enabled(projectDto.isEnabled())
                 .build();
     }
+
 
     static public List<Project> listToEntity(List<ProjectDto> projects) {
         return projects

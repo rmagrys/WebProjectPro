@@ -21,10 +21,8 @@ public class UserProjectFacade {
 
         return UserProject
                 .builder()
-                .project(project)
-                .user(user)
+                    .project(project)
+                    .user(user)
                 .build();
     }
-
-
 }

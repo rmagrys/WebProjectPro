@@ -1,20 +1,19 @@
 package com.example.webprojectpro.models.dtos;
 
 import com.example.webprojectpro.enums.Grade;
-import com.example.webprojectpro.models.entities.Project;
-import com.example.webprojectpro.models.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserProjectDto  {
+public class UserProjectDto {
 
     private long id;
 
