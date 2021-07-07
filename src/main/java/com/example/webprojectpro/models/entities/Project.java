@@ -37,6 +37,6 @@ public class Project {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    private List<UserProject> projects;
+    private List<UserProject> UserProjects;
 
 }

@@ -1,4 +1,4 @@
-package com.example.webprojectpro.Events;
+package com.example.webprojectpro.events;
 
 import com.example.webprojectpro.enums.Role;
 import com.example.webprojectpro.models.entities.User;
@@ -39,6 +39,7 @@ public class InitialAdminAccountEvent {
                     .email("WebProProjectAdmin@gmail.com")
                     .password(encodedPassword)
                     .role(Role.ADMIN)
+                    .enabled(true)
                     .firstName("Jan")
                     .lastName("Prokop")
                 .build();
