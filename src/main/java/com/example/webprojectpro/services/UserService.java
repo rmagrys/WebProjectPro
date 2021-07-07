@@ -1,13 +1,17 @@
 package com.example.webprojectpro.services;
 
+import com.example.webprojectpro.exceptions.BadRequestException;
 import com.example.webprojectpro.exceptions.NotFoundException;
 import com.example.webprojectpro.exceptions.NotUniqueException;
+import com.example.webprojectpro.models.dtos.LoginDto;
 import com.example.webprojectpro.models.dtos.UserDto;
 import com.example.webprojectpro.models.entities.User;
 import com.example.webprojectpro.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.nio.CharBuffer;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,19 +22,31 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public List<User> getAllUsers(){
         return userRepository.findAll();
     }
 
     public User saveNewUser(User user) {
-        if(!isEmailUnique(user.getEmail())) {
+        if(isEmailUnique(user.getEmail())) {
             user.setCreateDate(LocalDate.now());
             user.setLastLogin(Timestamp.valueOf(LocalDateTime.now()));
+            hashPassword(user);
             return userRepository.save(user);
         } else {
             throw new NotUniqueException("Email already exists");
         }
+    }
+
+    private void hashPassword(User user) {
+        CharBuffer passwordBuffer = CharBuffer.wrap(user.getPassword());
+        user.setPassword(passwordEncoder.encode(passwordBuffer).toCharArray());
+    }
+
+    private char[] hashPassword(char[] password){
+        CharBuffer passwordBuffer = CharBuffer.wrap(password);
+        return passwordEncoder.encode((passwordBuffer)).toCharArray();
     }
 
     public User getUserById(Long id) {
@@ -43,7 +59,7 @@ public class UserService {
 
     public User updateUserById(UserDto userDto, Long id) {
         User user = getUserById(id);
-        if(!isEmailUnique(userDto.getEmail())){
+        if(isEmailUnique(userDto.getEmail())){
             updateUserValues(user, userDto);
             return userRepository.save(user);
         } else {

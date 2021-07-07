@@ -38,7 +38,6 @@ public class UserDto {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-
-    private List<UserProjectDto> projectsDto;
+    private List<UserProjectDto> UserProjectsDto;
 }
 

@@ -1,5 +1,6 @@
 package com.example.webprojectpro.facades;
 
+import com.example.webprojectpro.enums.Grade;
 import com.example.webprojectpro.models.entities.Project;
 import com.example.webprojectpro.models.entities.User;
 import com.example.webprojectpro.models.entities.UserProject;
@@ -23,6 +24,7 @@ public class UserProjectFacade {
                 .builder()
                     .project(project)
                     .user(user)
+                    .acquiredGrade(Grade.NOT_RATED)
                 .build();
     }
 }

@@ -5,6 +5,7 @@ import com.example.webprojectpro.models.dtos.ProjectDto;
 import com.example.webprojectpro.services.ProjectService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,17 +18,21 @@ public class ProjectController {
 
     private final ProjectService projectService;
 
+
     @GetMapping(path = "/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ProjectDto getProjectById(@PathVariable final Long id){
         return ProjectDtoConverter.toDto(projectService.getProjectById(id));
     }
 
     @GetMapping(path = "/all")
+    @PreAuthorize("isAuthenticated()")
     public List<ProjectDto> getAll(){
         return ProjectDtoConverter.listToDto(projectService.getAllProjects());
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public Long addProject(@RequestBody final ProjectDto projectDto){
        return projectService.addNewProject(
@@ -36,6 +41,7 @@ public class ProjectController {
     }
 
     @PatchMapping(path = "/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public Long updateProject(@RequestBody  final ProjectDto projectDto, @PathVariable Long id){
         return ProjectDtoConverter.toDto(
@@ -44,6 +50,7 @@ public class ProjectController {
     }
 
     @DeleteMapping(path = "/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public void deleteProjectById(@PathVariable Long id){
         projectService.deleteUserById(id);

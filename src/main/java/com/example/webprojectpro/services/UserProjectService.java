@@ -26,7 +26,7 @@ public class UserProjectService {
         return userProjectRepository
                 .findById(id)
                 .orElseThrow(
-                        () ->  new NotFoundException("User with id = [" + id + "] does not exist")
+                        () ->  new NotFoundException("UserProject with id = [" + id + "] does not exist")
                 );
     }
 

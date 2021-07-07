@@ -20,7 +20,7 @@ public class ProjectService {
         return projectRepository
                 .findById(id)
                 .orElseThrow(() ->
-                        new NotFoundException("User with id = " + id + " not found")
+                        new NotFoundException("Project with id = " + id + " not found")
                 );
     }
 

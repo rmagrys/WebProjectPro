@@ -14,6 +14,7 @@ public class ProjectDtoConverter {
         return ProjectDto.builder()
                 .id(project.getId())
                 .possibleGrade(project.getPossibleGrade())
+                .description(project.getDescription())
                 .name(project.getName())
                 .enabled(project.isEnabled())
                 .build();
@@ -23,6 +24,7 @@ public class ProjectDtoConverter {
         return Project.builder()
                 .id(projectDto.getId())
                 .possibleGrade(projectDto.getPossibleGrade())
+                .description(projectDto.getDescription())
                 .name(projectDto.getName())
                 .enabled(projectDto.isEnabled())
                 .build();
