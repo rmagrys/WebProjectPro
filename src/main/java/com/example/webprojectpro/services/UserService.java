@@ -104,8 +104,9 @@ public class UserService {
         final String rawPassword = String.valueOf(loginDto.getPassword());
         final String passwordHash = String.valueOf(user.getPassword());
 
-        if (passwordEncoder.matches(rawPassword,passwordHash)) {
-            return user;
+        if (passwordEncoder.matches(rawPassword, passwordHash)) {
+            user.setLastLogin(Timestamp.valueOf(LocalDateTime.now()));
+            return userRepository.save(user);
         } else {
             throw new NotFoundException("User logging with this mail failed");
         }
