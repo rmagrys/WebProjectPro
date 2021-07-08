@@ -1,6 +1,7 @@
 package com.example.webprojectpro.controllers;
 
 import com.example.webprojectpro.converters.UserDtoConverter;
+import com.example.webprojectpro.models.dtos.LoginDto;
 import com.example.webprojectpro.models.dtos.UserDto;
 import com.example.webprojectpro.models.entities.User;
 import com.example.webprojectpro.services.UserService;
@@ -19,6 +20,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+
+    @PostMapping(path = "/login")
+    public UserDto loginUser(@RequestBody LoginDto loginDto) {
+        return UserDtoConverter.toDtoAllData(userService.loginUser(loginDto));
+    }
 
 
     @GetMapping(path = "/all")

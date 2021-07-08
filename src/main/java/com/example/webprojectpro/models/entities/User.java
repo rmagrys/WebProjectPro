@@ -50,5 +50,5 @@ public class User {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    private List<UserProject> projects;
+    private List<UserProject> UserProjects;
 }

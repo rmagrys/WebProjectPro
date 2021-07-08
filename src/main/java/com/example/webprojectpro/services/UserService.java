@@ -95,4 +95,19 @@ public class UserService {
         User user = getUserById(id);
         userRepository.delete(user);
     }
+
+    public User loginUser(LoginDto loginDto) {
+        User user = userRepository.findByEmail(
+                loginDto.getLogin()).orElseThrow(
+                        () -> new NotFoundException("User with this email does not exists")
+        );
+        final String rawPassword = String.valueOf(loginDto.getPassword());
+        final String passwordHash = String.valueOf(user.getPassword());
+
+        if (passwordEncoder.matches(rawPassword,passwordHash)) {
+            return user;
+        } else {
+            throw new NotFoundException("User logging with this mail failed");
+        }
+    }
 }

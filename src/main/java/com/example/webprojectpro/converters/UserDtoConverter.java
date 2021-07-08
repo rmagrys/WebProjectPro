@@ -39,6 +39,26 @@ public class UserDtoConverter {
                 .build();
     }
 
+    public static UserDto toDtoAllData(User user){
+       return UserDto.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .semester(user.getSemester())
+                .learningGroup(user.getLearningGroup())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .password(null)
+                .createDate(user.getCreateDate())
+                .lastLogin(user.getLastLogin())
+                .role(user.getRole())
+                .UserProjectsDto(user
+                        .getUserProjects()
+                        .stream()
+                        .map(UserProjectDtoConverter::toDto)
+                        .collect(Collectors.toList()))
+                .build();
+    }
+
     public static List<UserDto> listToDto(List<User> userList) {
         return userList
                 .stream()
