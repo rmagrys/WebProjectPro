@@ -1,13 +1,14 @@
 package com.example.webprojectpro.models.entities;
 
 import com.example.webprojectpro.enums.Role;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,17 +24,27 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    @Email
+    @Max(255)
+    @NotNull
     private String email;
 
+    @Max(25)
     private String semester;
 
+    @Max(25)
     private String learningGroup;
 
+    @Max(125)
+    @NotNull
     private char[] password;
 
+    @Max(40)
     private String firstName;
 
+    @Max(40)
     private String lastName;
+
 
     private LocalDate createDate;
 

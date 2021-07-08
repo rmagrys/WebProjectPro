@@ -3,11 +3,13 @@ package com.example.webprojectpro.controllers;
 import com.example.webprojectpro.converters.ProjectDtoConverter;
 import com.example.webprojectpro.models.dtos.ProjectDto;
 import com.example.webprojectpro.services.ProjectService;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -21,7 +23,7 @@ public class ProjectController {
 
     @GetMapping(path = "/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ProjectDto getProjectById(@PathVariable final Long id){
+    public ProjectDto getProjectById(@PathVariable @NotNull final Long id){
         return ProjectDtoConverter.toDto(projectService.getProjectById(id));
     }
 
@@ -34,7 +36,7 @@ public class ProjectController {
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public Long addProject(@RequestBody final ProjectDto projectDto){
+    public Long addProject(@RequestBody @Valid final ProjectDto projectDto){
        return projectService.addNewProject(
                ProjectDtoConverter.toEntity(projectDto)
        ).getId();
@@ -43,7 +45,7 @@ public class ProjectController {
     @PatchMapping(path = "/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    public Long updateProject(@RequestBody  final ProjectDto projectDto, @PathVariable Long id){
+    public Long updateProject(@RequestBody @Valid final ProjectDto projectDto, @PathVariable @NotNull final Long id){
         return ProjectDtoConverter.toDto(
                 projectService.updateProject(projectDto, id)
         ).getId();
@@ -52,7 +54,7 @@ public class ProjectController {
     @DeleteMapping(path = "/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteProjectById(@PathVariable Long id){
+    public void deleteProjectById(@PathVariable @NotNull final Long id){
         projectService.deleteUserById(id);
     }
 }

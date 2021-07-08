@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.Max;
 
 @Builder
 @Data
@@ -17,8 +18,10 @@ public class ProjectDto {
 
     private Long id;
 
+    @Max(40)
     private String name;
 
+    @Max(400)
     private String description;
 
     private boolean enabled;

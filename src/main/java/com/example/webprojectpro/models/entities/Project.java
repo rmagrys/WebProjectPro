@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import java.util.List;
 
 
@@ -22,8 +23,10 @@ public class Project {
     @GeneratedValue
     private Long id;
 
+    @Max(40)
     private String name;
 
+    @Max(400)
     private String description;
 
     private boolean enabled;

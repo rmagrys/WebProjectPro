@@ -5,10 +5,12 @@ import com.example.webprojectpro.models.dtos.UserProjectDto;
 import com.example.webprojectpro.models.entities.UserProject;
 import com.example.webprojectpro.services.UserProjectService;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +29,7 @@ public class UserProjectController {
 
     @GetMapping(path = "/user/{id}")
     @PreAuthorize("isAuthenticated()")
-    public List<UserProjectDto> getAllByUserId(@PathVariable final Long id){
+    public List<UserProjectDto> getAllByUserId(@PathVariable @NotNull final Long id){
         return UserProjectDtoConverter
                 .listToDtoWithRelations(userProjectService
                         .getAll()
@@ -42,7 +44,7 @@ public class UserProjectController {
 
     @GetMapping(path = "/project/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<UserProjectDto> getAllByProjectId(@PathVariable final Long id){
+    public List<UserProjectDto> getAllByProjectId(@PathVariable @NotNull final Long id){
         return UserProjectDtoConverter
                 .listToDtoWithRelations(userProjectService
                         .getAll()
@@ -56,7 +58,7 @@ public class UserProjectController {
 
     @GetMapping(path = "/{id}")
     @PreAuthorize("isAuthenticated()")
-    public UserProjectDto getProjectById(@PathVariable final Long id){
+    public UserProjectDto getProjectById(@PathVariable @NotNull final Long id){
         return UserProjectDtoConverter.toDto(
                 userProjectService.getOneById(id)
         );
@@ -64,7 +66,7 @@ public class UserProjectController {
 
     @PostMapping(path = "/user/{userId}/project/{projectId}")
     @PreAuthorize("isAuthenticated()")
-    public Long saveProjectToUser(@PathVariable final Long userId, @PathVariable final Long projectId){
+    public Long saveProjectToUser(@PathVariable final Long userId, @PathVariable @NotNull final Long projectId){
         return UserProjectDtoConverter.toDto(
                 userProjectService.saveProjectToUser(userId, projectId)
         ).getId();
@@ -73,7 +75,7 @@ public class UserProjectController {
     @PatchMapping(path = "rate/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    public Long rateProject(@RequestBody final UserProjectDto userProjectDto, @PathVariable final Long id){
+    public Long rateProject(@RequestBody final UserProjectDto userProjectDto, @PathVariable @NotNull final Long id){
         return UserProjectDtoConverter.toDto(
                 userProjectService.rateProject(userProjectDto, id)
         ).getId();
@@ -82,7 +84,7 @@ public class UserProjectController {
     @DeleteMapping(path = "/{id}")
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteUserProject(@PathVariable final Long id){
+    public void deleteUserProject(@PathVariable @NotNull final Long id){
         userProjectService.deleteById(id);
     }
 }

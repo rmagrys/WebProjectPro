@@ -3,14 +3,14 @@ package com.example.webprojectpro.controllers;
 import com.example.webprojectpro.converters.UserDtoConverter;
 import com.example.webprojectpro.models.dtos.LoginDto;
 import com.example.webprojectpro.models.dtos.UserDto;
-import com.example.webprojectpro.models.entities.User;
 import com.example.webprojectpro.services.UserService;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -22,7 +22,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping(path = "/login")
-    public UserDto loginUser(@RequestBody LoginDto loginDto) {
+    public UserDto loginUser(@RequestBody @Valid final LoginDto loginDto) {
         return UserDtoConverter.toDtoAllData(userService.loginUser(loginDto));
     }
 
@@ -35,7 +35,7 @@ public class UserController {
 
     @GetMapping(path = "/{id}")
     @PreAuthorize("isAuthenticated()")
-    public UserDto getUserById(@PathVariable @NonNull final Long id) {
+    public UserDto getUserById(@PathVariable @NotNull final Long id) {
         return UserDtoConverter
                 .toDto(userService.getUserById(id));
     }
@@ -43,21 +43,21 @@ public class UserController {
     @PostMapping
     @PreAuthorize("permitAll()")
     @ResponseStatus(HttpStatus.CREATED)
-    public Long addUser(@RequestBody final UserDto userDto) {
+    public Long addUser(@RequestBody @Valid final UserDto userDto) {
         return userService.saveNewUser(UserDtoConverter.toEntity(userDto)).getId();
     }
 
     @PatchMapping(path = "/{id}")
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.OK)
-    public Long updateUserById(@RequestBody final UserDto userDto, @PathVariable Long id){
+    public Long updateUserById(@RequestBody @Valid final UserDto userDto, @PathVariable @NotNull final Long id){
        return userService.updateUserById(userDto, id).getId();
     }
 
     @DeleteMapping(path = "/{id}")
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteUserById(@PathVariable Long id){
+    public void deleteUserById(@PathVariable @NotNull final Long id){
         userService.deleteUserById(id);
     }
 }
