@@ -22,6 +22,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping(path = "/login")
+    @PreAuthorize("permitAll()")
     public UserDto loginUser(@RequestBody @Valid final LoginDto loginDto) {
         return UserDtoConverter.toDtoAllData(userService.loginUser(loginDto));
     }
